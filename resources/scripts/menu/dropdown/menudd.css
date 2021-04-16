@@ -1,0 +1,16 @@
+#bordemenu{background:#31679B; width:900px; height:25px; border-radius:3px; position:relative; background:url(images/fondo.png) repeat-x}
+ul.menu {list-style:none; margin:0; padding:0; margin-left:10px}
+ul.menu * {margin:0; padding:0; font-family:Arial; font-size:12px}
+ul.menu a {display:block; color:#000; text-decoration:none; padding:2px 25px 4px 4px; color:#FFF;}
+ul.menu a:hover {color:#fff; background:url(images/menu.png) repeat-x}
+ul.menu .memu-icon {position: relative; margin: 4px 10px 0px 0px;float: left;}
+.memu-icon img {border:0px;width: 16px; height: 16px}
+ul.menu li {position:relative; float:left; line-height:20px}
+ul.menu ul {position:absolute; top:25px; background:url(images/submenu.png) repeat-y; display:none; list-style:none}
+ul.menu ul li {position:relative; width:200px; margin:0}
+ul.menu ul li a {display:block; padding:2px 7px 4px; background:url(images/submenu.png) repeat-y; border-bottom:solid 1px #FFFFFF; color:#FFFFFF}
+ul.menu ul li a:hover {background:url(images/subhover.png) repeat-y; color:#003366}
+ul.menu ul ul {left:150px; top:0px}
+ul.menu .menulink {padding:2px 25px 4px 4px; color:#FFF; background:url(images/down_arrow.gif) no-repeat 90% 50%}
+ul.menu .menulink:hover {color:#fff; background:url(images/menu.png) repeat-x}
+ul.menu .sub {background:#d1d1d1 url(images/arrow.gif) 136px 8px no-repeat}

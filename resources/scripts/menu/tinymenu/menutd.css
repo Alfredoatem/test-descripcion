@@ -1,0 +1,12 @@
+ul.menu {list-style:none; margin:0; padding:0}
+ul.menu * {margin:0; padding:0; font-family:Arial; font-size:12px}
+ul.menu a {display:block; color:#000; text-decoration:none}
+ul.menu li {position:relative; float:left;}
+ul.menu ul {position:absolute; top:30px; background:#d1d1d1; display:none; opacity:0; list-style:none}
+ul.menu ul li {position:relative; width:148px; margin:0}
+ul.menu ul li a {display:block; padding:2px 7px 4px; background-color:#d1d1d1; border-bottom:}
+ul.menu ul li a:hover {background-color:#0488C8; color:#FFFFFF}
+ul.menu ul ul {left:148px; top:-5px}
+ul.menu .menulink {padding:1px 4px 4px; background:#0488C8; width:135px; border-right:solid 1px #FFFFFF; color:#FFF; height:25px; vertical-align:middle; overflow:hidden}
+ul.menu .menulink:hover, ul.menu .menuhover {background:#999999; color:#000000}
+ul.menu .sub {background:#d1d1d1 url(images/arrow.gif) 136px 8px no-repeat}

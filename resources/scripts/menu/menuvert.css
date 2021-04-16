@@ -1,0 +1,54 @@
+#menu{
+	vertical-align:top;
+}
+nav.vertical{
+  position:relative;
+  width:200px;
+	padding:0px;
+	margin:0px;
+}
+
+/* ALL UL */
+nav.vertical ul{
+  list-style: none;
+	padding:0px;
+	margin:0px;
+}
+/* ALL LI */
+nav.vertical li{
+  position:relative;
+	padding:0px;
+	margin:0px;
+}
+/* ALL A */
+nav.vertical a{
+  display:block;
+  color:#eee;
+  text-decoration:none;
+  padding:10px 15px;
+  background:#666;
+  transition:0.2s;
+}
+/* ALL A HOVER */
+nav.vertical li:hover > a{
+  background:#778;
+}
+
+/* INNER UL HIDE */
+nav.vertical ul ul{
+  position:absolute;
+  left:0%;
+  top:0;
+  width:100%;
+  visibility:hidden;
+  opacity:0;
+  transition: transform 0.2s;
+  transform: translateX(50px);
+}
+/* INNER UL SHOW */
+nav.vertical li:hover > ul{
+  left:100%;
+  visibility:visible;
+  opacity:1;
+  transform: translateX(0px);
+}
