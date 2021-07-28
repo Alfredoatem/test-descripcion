@@ -32,21 +32,32 @@ $(function(){
       $("#cbotiper").html(html);
     }
   });
-
-  /*Funciones de Edicion*/
-  $(".btn_edit").click(function(){
-    var anio = (new Date).getFullYear();
-    if($("#txtgest").val()>=anio){
-      $('form.maestro').find('input[type=text]').each(function(){
-        $(this).removeAttr('readonly')
-      });
-      $('form.maestro').find('select').each(function(){
-        $(this).removeAttr('disabled')
-      });
+  $.ajax({
+    type : 'POST',
+    url: "../ajax/ajaxcombos.php",
+    // data:"list=ofin&valor="+$(this).val(),
+    data : "list=ofin&sel="+$("#hdnselofin").val(),
+    success: function(html){
+      $("#cboofin").html(html);
     }
+  });
 
-    $(".llaves,#txtrepar").attr('readonly','readonly');     
-    $('div.guardar').show();
+    /*Funciones de Edicion*/
+    $(".btn_edit").click(function(){
+        var anio = (new Date).getFullYear();
+        // alert('hola');
+        //if($("#txtgest").val()>=anio){
+        $('form.maestro').find('input[type=text]').each(function(){
+            $(this).removeAttr('readonly')
+        });
+        $('form.maestro').find('select').each(function(){
+            $(this).removeAttr('disabled')
+        });
+        //}
+
+        $(".llaves,#txtrepar").attr('readonly','readonly');
+        //$(".llaves,#txtrepar").removeAttr('readonly','readonly');
+        $('div.guardar').show();
 
     $('#txtfec').datetimepicker({
       locale: 'es',
@@ -56,7 +67,8 @@ $(function(){
       useCurrent: false
     });
 
-    $(".enlacerepar").attr("onclick","popup('zooms/zoomrepar.php','700','360')")
+    $(".enlacerepar").attr("onclick","popup('zooms/zoomrepar.php','700','360')");
+    // $(".enlacerepar2").attr("onclick","popup('zooms/zoomrepar.php','700','360')");
     $("#txtgest,#txtnro,#txtnroconta").numeric();
     $("#txthtd").inputmask("aaa99999");
     $("#txtipo").alpha({nchars:"ABCDEGHIJKLMÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz1234567890"});
@@ -154,19 +166,88 @@ $(function(){
     e.preventDefault();
     var form_data = $('form.detalle').serialize();
     var llaves = $("form.maestro").find('.llaves').serialize();
+    // alert('llaves'+llaves);
     $.ajax({
       type : 'POST',
-      url : "ajaxupdet.php",
+      url : "../ajaxupdet.php",
       data : form_data+"&"+llaves,
       success : function(html){
         if(html=="Ok"){
-          $('#message').html('<div class="alert alert-success fade in"><button type="button" class="close close-alert" data-dismiss="alert" aria-hidden="true">×</button>Se Actualizo Correctamente!!</div>');
+          $('#message').html('<div class="alert alert-success fade in"><button type="button" class="close close-alert" data-dismiss="alert" aria-hidden="true">×</button>Se Actualizó Correctamente!!</div>');
         }else{
           $('#message').html('<div class="alert alert-danger fade in"><button type="button" class="close close-alert" data-dismiss="alert" aria-hidden="true">×</button>'+html+'</div>');
         }
       }
     });
   });
+  //prueba guarda aprobacion Vobo
+  $(".btn_guardaest").click(function(e){
+    e.preventDefault();
+    var form_data = $('form.estado').serialize();
+    var llaves = $("form.maestro").find('.llaves').serialize();
+    // alert('llaves'+llaves);
+    $.ajax({
+      type : 'POST',
+      url : "../ajaxvobo.php",
+      data : form_data+"&"+llaves,
+      success : function(html){
+        if(html=="Ok"){
+          $('#message').html('<div class="alert alert-success fade in"><button type="button" class="close close-alert" data-dismiss="alert" aria-hidden="true">×</button>Se Actualizó Correctamente!!</div>');
+          $('#modalvobo').modal('hide');
+        }else{
+          $('#message').html('<div class="alert alert-danger fade in"><button type="button" class="close close-alert" data-dismiss="alert" aria-hidden="true">×</button>'+html+'</div>');
+          $('#modalvobo').modal('hide');
+        }
+      }
+    });
+  });
+  //fin prueba guarda aprobacion Vobo
+
+//prueba glosa aux
+  $(".btn_saveauxglosa").click(function(e){
+    e.preventDefault();
+    var form_data = $('form.auxglosa').serialize();
+    var llaves = $("form.maestro").find('.llaves').serialize();
+     // alert('llaves'+llaves);
+    $.ajax({
+      type : 'POST',
+      url : "../ajaxglosaux.php",
+      data : form_data+"&"+llaves,
+      success : function(html){
+        if(html=="Ok"){
+          $('#message').html('<div class="alert alert-success fade in"><button type="button" class="close close-alert" data-dismiss="alert" aria-hidden="true">×</button>Se Actualizó Correctamente!!</div>');
+          $('#modalauxglosa1').modal('hide');
+        }else{
+          $('#message').html('<div class="alert alert-danger fade in"><button type="button" class="close close-alert" data-dismiss="alert" aria-hidden="true">×</button>'+html+'</div>');
+          $('#modalauxglosa1').modal('hide');
+        }
+      }
+    });
+  });
+  //fin prueba glosa aux
+
+  //prueba guarda gencontab
+  $(".btn_guardagenconta").click(function(e){
+    e.preventDefault();
+    var form_data = $('form.genconta').serialize();
+    var llaves = $("form.maestro").find('.llaves').serialize();
+    // alert('llaves'+llaves);
+    $.ajax({
+      type : 'POST',
+      url : "../ajaxgencontab.php",
+      data : form_data+"&"+llaves,
+      success : function(html){
+        if(html=="Ok"){
+          $('#message').html('<div class="alert alert-success fade in"><button type="button" class="close close-alert" data-dismiss="alert" aria-hidden="true">×</button>Se Actualizó Correctamente!!</div>');
+          $('#modalgenconta').modal('hide');
+        }else{
+          $('#message').html('<div class="alert alert-danger fade in"><button type="button" class="close close-alert" data-dismiss="alert" aria-hidden="true">×</button>'+html+'</div>');
+          $('#modalgenconta').modal('hide');
+        }
+      }
+    });
+  });
+  //fin prueba guarda gencontab
 
   /*Funciones de Eliminacion*/
   $('.btn_delete').on('click', function(e) {
@@ -186,49 +267,50 @@ $(function(){
     });
   });
 
-  /*Funcion Descargo*/
-  var llavedesc = $("form.maestro").find('.llaves').serialize();
-  $.ajax({
-    type : 'POST',
-    url : "ajaxestdesc.php",
-    data : llavedesc,
-    success : function(data){
-      var json = eval("(" + data + ")");
-      $('#txtrevisor').attr('value',json.revisor);
-      $('#txtrevisor').attr('readonly','readonly');
-      if(json.value==""){
-        $('#txtestado').attr('value','R');
-        $('#txtfdesc,#txtestado,#txtfsal').attr('readonly','readonly');
-        $('#txtanexo').removeAttr('readonly');
-      }else{
-        if(json.value=="D" || json.value=="J" || json.value=="O" || json.value=="R"){
-          $('#txtfdesc').attr('readonly','readonly');
-          $('#txtanexo,#txtfsal').removeAttr('readonly');
-        }else{
-          $('input[type=text]').attr('readonly','readonly');
-          $('.btn_guardadesc').attr('class','btn btn-success btn_guardadesc disabled')
-          $('.btn_guardadesc').on('click', function(e) {
-            e.preventDefault();
-          });
-        }
-      }
-    }
-  });
+  // /*Funcion Descargo*/
+  // var llavedesc = $("form.maestro").find('.llaves').serialize();
+  // $.ajax({
+  //   type : 'POST',
+  //   url : "ajaxestdesc.php",
+  //   data : llavedesc,
+  //   success : function(data){
+  //     //alert('aca');
+  //     var json = eval("(" + data + ")");
+  //     $('#txtrevisor').attr('value',json.revisor);
+  //     $('#txtrevisor').attr('readonly','readonly');
+  //     if(json.value==""){
+  //       $('#txtestado').attr('value','R');
+  //       $('#txtfdesc,#txtestado,#txtfsal').attr('readonly','readonly');
+  //       $('#txtanexo').removeAttr('readonly');
+  //     }else{
+  //       if(json.value=="D" || json.value=="J" || json.value=="O" || json.value=="R"){
+  //         $('#txtfdesc').attr('readonly','readonly');
+  //         $('#txtanexo,#txtfsal').removeAttr('readonly');
+  //       }else{
+  //         $('input[type=text]').attr('readonly','readonly');
+  //         $('.btn_guardadesc').attr('class','btn btn-success btn_guardadesc disabled')
+  //         $('.btn_guardadesc').on('click', function(e) {
+  //           e.preventDefault();
+  //         });
+  //       }
+  //     }
+  //   }
+  // });
 
   $('#txtfecde').datetimepicker({
     locale: 'es',
-    format: 'L',
-    minDate: moment("01/01/2015"),
+    format: 'MM/DD/YYYY',
+    minDate: moment("01/01/2015", "MM/DD/YYYY"),
+    //minDate: moment(),
     maxDate: moment(),
-    defaultDate: moment()
   });
 
   $('#txtfecds').datetimepicker({
     locale: 'es',
-    format: 'DD/MM/YYYY',
-    minDate: moment("01/01/2015"),
+    format: 'MM/DD/YYYY',
+    minDate: moment("01/01/2015", "MM/DD/YYYY"),
+    //minDate: moment(),
     maxDate: moment(),
-    defaultDate: moment()
   });
 
   $("#txthtddesc").inputmask("aaa99999");
@@ -243,7 +325,7 @@ $(function(){
     var llaves = $("form.maestro").find('.llaves').serialize();
     $.ajax({
       type : 'POST',
-      url : "ajaxdescprev.php",
+      url : "../ajaxdescprev.php",
       data : form_data+"&"+llaves,
       success : function(html){
         if(html=="Actualizado"){
@@ -260,27 +342,27 @@ $(function(){
     });
   });
 
-  /*Funcion Pasajes*/
-  $('#txtfecini').datetimepicker({
-    locale: 'es',
-    format: 'L',
-    minDate: moment("01/01/2015"),
-    maxDate: moment(),
-    useCurrent: false
-  });
-
-  $('#txtfecfin').datetimepicker({
-    locale: 'es',
-    format: 'L',
-    useCurrent: false
-  });
-
-  $("#txtfecini").on("dp.change", function (e) {
-    $('#txtfecfin').data("DateTimePicker").minDate(e.date);
-  });
-  $("#txtfecfin").on("dp.change", function (e) {
-    $('#txtfecini').data("DateTimePicker").maxDate(e.date);
-  });
+  // /*Funcion Pasajes*/
+  // $('#txtfecini').datetimepicker({
+  //   locale: 'es',
+  //   format: 'L',
+  //   minDate: moment("01/01/2015"),
+  //   maxDate: moment(),
+  //   useCurrent: false
+  // });
+  //
+  // $('#txtfecfin').datetimepicker({
+  //   locale: 'es',
+  //   format: 'L',
+  //   useCurrent: false
+  // });
+  //
+  // $("#txtfecini").on("dp.change", function (e) {
+  //   $('#txtfecfin').data("DateTimePicker").minDate(e.date);
+  // });
+  // $("#txtfecfin").on("dp.change", function (e) {
+  //   $('#txtfecini').data("DateTimePicker").maxDate(e.date);
+  // });
 
   $(document).on('keyup','#txtobs',function(){
     this.value = this.value.toUpperCase();
@@ -290,9 +372,10 @@ $(function(){
     e.preventDefault();
     var form_data = $(this).serialize();
     var llaves = $("form.maestro").find('.llaves').serialize();
+     // alert('entro'+llaves);
     $.ajax({
       type : 'POST',
-      url : "ajaxpyvprev.php",
+      url : "../ajaxpyvprev.php",
       data : form_data+"&"+llaves,
       success : function(html){
         if(html=="Actualizado"){

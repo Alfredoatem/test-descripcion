@@ -15,18 +15,21 @@ if($_POST){
 	$txtgest=$_POST['txtgest'];
 	$txtdcto=$_POST['txtdcto'];
 	$txtnro=$_POST['txtnro'];
+
 	$txtfini=$_POST['txtfini'];
-  $txtffin=$_POST['txtffin'];
+    $txtffin=$_POST['txtffin'];
 	$txthtd=$_POST['txthtd'];
+    $txtdctoconta=$_POST['txtdctoconta'];
+    $txtnroconta=$_POST['txtnroconta'];
 	$txtglosa=$_POST['txtglosa'];
 	$hdnrepar=$_POST['hdnrepar'];
 	$txtemp=$_POST['txtemp'];
 	$txtfact=$_POST['txtfact'];
-  $cboffin=$_POST['cboffin'];
+    $cboffin=$_POST['cboffin'];
 	$txtsolpor=$_POST['txtsolpor'];
 	$txtpedi=$_POST['txtpedi'];
 	$txtcotpor=$_POST['txtcotpor'];
-  $cbotiper=$_POST['cbotiper'];
+    $cbotiper=$_POST['cbotiper'];
   
 	if($txtgest!=""){
 		$a = ($criterio=='')?'':" AND ";
@@ -115,6 +118,7 @@ if($_POST){
         <div class="row">
           <div class="col-lg-12">
             <h3 class="page-header">Busqueda <?=bdctoalma($_SESSION['sialmagalm'].$_GET['transac'])?></h3>
+
           </div>
           <!-- /.col-lg-12 --> 
         </div>
@@ -254,7 +258,9 @@ if($_POST){
                       <div class="form-group">
                         <div class="col-lg-1"></div>
                         <div class="col-lg-3">
-                          <button type="submit" class="btn btn-primary">Enviar</button>
+                            <input type="button" onclick="location.href='../views/formins1i.php';" class="btn btn-lg btn-warning" value="Registrar">
+                          <button type="submit" class="btn btn-lg btn-primary">Buscar</button>
+                            <button type="reset" class="btn btn-lg btn-danger">Limpiar</button>
                         </div>
                       </div>
                     </div>

@@ -4,12 +4,25 @@ require_once "../../../functions/global.php";
 
 $criterio = "";
 
-if ($_GET["txtprod"]!=''){
+if(isset($_GET["txtprod"])==null){
+    $txtprod = '';
+}
+else{
+    $txtprod = $_GET["txtprod"];
+}
+if ($txtprod!=''){
 	$txtprod=mb_strtoupper($_GET['txtprod']);
 	$criterio .= "AND des matches '*$txtprod*' ";
 }
+
 $registros = 5;
-$pagina = $_GET["pagina"];
+
+if(isset($_GET["pagina"])==null){
+    $pagina = 0;
+}
+else{
+    $pagina = $_GET["pagina"];
+}
 
 if (!$pagina) { 
 	$inicio = 0; 
@@ -18,13 +31,13 @@ if (!$pagina) {
 	$inicio = ($pagina - 1) * $registros; 
 }
 
-$sql = "SELECT count(*) as num FROM conpre20:producto WHERE 1=1 ".$criterio;
+$sql = "SELECT count(*) as num FROM conpre21:producto WHERE 1=1 ".$criterio;
 $cont = $db->prepare($sql);
 $cont->execute();
 $r = $cont->fetch(PDO::FETCH_ASSOC);
 $total=$r['num'];
 
-$sql = "SELECT skip $inicio first $registros * FROM conpre20:producto WHERE 1=1 ".$criterio;
+$sql = "SELECT skip $inicio first $registros * FROM conpre21:producto WHERE 1=1 ".$criterio;
 $sql .= "ORDER BY 1 ";
 $query = $db->prepare($sql);
 $query->execute();

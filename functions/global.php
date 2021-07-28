@@ -1,4 +1,4 @@
-<?
+<?php
 $gestion = 2020;
 
 /*CAMBIA FORMATO DE FECHA*/
@@ -125,6 +125,16 @@ function verdescargo($g,$n,$i,$t){
 	$val = ($r['num']==1)?1:0;
 	return $val;	
 }
+//prueba aux
+
+function verglosaux($g,$d,$n){
+    global $db;
+//    $qry ="SELECT count(*) as num FROM descsigep WHERE gestion='$g' AND nro='$n' AND idprev='$i' AND tipo='$t'";
+    $qry="SELECT count(*) as num FROM glosalma WHERE gestion='".$g."' AND dcto='".$d."' AND nro='".$n."' ";
+    $r = $db->query($qry)->fetch(PDO::FETCH_ASSOC);
+    $val = ($r['num']==1)?1:0;
+    return $val;
+}
 
 function verestado($g,$n,$i,$t,$e){
 	global $db;
@@ -134,9 +144,9 @@ function verestado($g,$n,$i,$t,$e){
 	return $val;	
 }
 
-function verpasajes($g,$n,$i,$t){
+function verpasajes($g,$n){
 	global $db;
-	$qry ="SELECT count(*) as num FROM pyvsigep WHERE gestion='$g' AND nro='$n' AND idprev='$i' AND tipo='$t'";
+	$qry ="SELECT count(*) as num FROM pyvsigep WHERE gestion='$g' AND nro='$n'";
 	$r = $db->query($qry)->fetch(PDO::FETCH_ASSOC);
 	$val = ($r['num']==1)?1:0;
 	return $val;	
@@ -144,15 +154,15 @@ function verpasajes($g,$n,$i,$t){
 
 function verhtd($g,$n,$i,$t){
 	global $db;
-	$qry ="SELECT nvl(htd,'X') as htd FROM maesigep WHERE gestion='$g' AND nro='$n' AND idprev='$i' AND tipo='$t'";
+	$qry ="SELECT * FROM maesigep WHERE gestion='$g' AND nro='$n' AND idprev='$i' AND tipo='$t'";
 	$r = $db->query($qry)->fetch(PDO::FETCH_ASSOC);
 	$val = trim($r['htd']);
 	return $val;	
 }
 
-function verpartpas($g,$n,$i,$t){
+function verpartpas($g,$n){
 	global $db;
-	$qry ="SELECT * FROM detsigep WHERE gestion='$g' AND nro='$n' AND idprev='$i' AND tipo='$t'";
+	$qry ="SELECT * FROM detsigep WHERE gestion='$g' AND nro='$n'";
   $p = $db->query($qry)->fetchAll(PDO::FETCH_ASSOC);
   $bandera = 0;
   foreach($p as $pyv){
@@ -173,7 +183,7 @@ function verconta($d,$g,$n,$i,$t){
 
 function vercodp($p){
 	global $db;
-	$qry ="SELECT count(*) as num FROM conpre20:sctas WHERE cod[1]='6' AND codp='".$p."' ";
+	$qry ="SELECT count(*) as num FROM conpre21:sctas WHERE cod[1]='6' AND codp='".$p."' ";
 	$r = $db->query($qry)->fetch(PDO::FETCH_ASSOC);	
 	$val = ($r['num']>=1)?1:0;
 	return $val;	
@@ -181,33 +191,53 @@ function vercodp($p){
 
 function verscta($s){
 	global $db;
-	$qry ="SELECT count(*) as num FROM conpre20:sctas WHERE cod='".$s."' ";
+	$qry ="SELECT count(*) as num FROM conpre21:sctas WHERE cod='".$s."' ";
 	$r = $db->query($qry)->fetch(PDO::FETCH_ASSOC);	
 	$val = ($r['num']>=1)?1:0;
 	return $val;	
 }
 
-function verpermiso($u,$m,$g=0,$n=0,$i=0,$t='N'){
+function verpermiso($total,$vb,$d,$nc,$u,$m,$g=0,$n=0,$i=0,$t='N'){
 	global $db;
 	$qry ="SELECT count(*) as num FROM permisos WHERE programa='sialma' AND usuario='$u' AND menu='$m'";
-  $r = $db->query($qry)->fetch(PDO::FETCH_ASSOC);
-  
+    $r = $db->query($qry)->fetch(PDO::FETCH_ASSOC);
+    //echo $qry;
+    //echo $r['num']." ";
+    //echo "ada".$total;
   if($_SESSION["sialmarol"]<>'admin'){
     if($r['num']>=1){
-      if($m=="Detalle" || $m=="Eliminar"){
-        $val = ($g<date('Y'))?"disabled":"";
-      }elseif($m=="Editar"){
-        if($g<date('Y') && verhtd($g,$n,$i,$t)!='X'){
+      if($m=="Vobo"){
           $val = "disabled";
-        }else{
-          $val = "";
-        }
-      }elseif($m=="Descargo" || $m=="Comision"){
-        if(verhtd($g,$n,$i,$t)=='X'){
-          $val = "disabled";
-        }else{
-          $val = "";
-        }
+      }
+      elseif($m=="Detalle" || $m=="Eliminar"){
+          if($vb=="S"){
+              $val = "disabled";
+          }
+          elseif( $d){
+              $val = "disabled";
+          }elseif( $nc){
+              $val = "disabled";
+          }elseif( $total>=1){
+              $val = "disabled";
+          }
+          else{
+              $val = "";
+          }
+      }elseif($m=="Editar" || $m=="Gloaux"){
+          if($vb=="S"){
+              $val = "disabled";
+          }
+          elseif( $d){
+              $val = "disabled";
+          }elseif( $nc){
+              $val = "disabled";
+          }else{
+              $val = "";
+          }
+      }elseif($m=="Gencontab"){
+          if($_SESSION["sialmarol"]=='conta'){
+              $val = "";
+          }
       }else{
         $val = "";
       }
@@ -215,9 +245,39 @@ function verpermiso($u,$m,$g=0,$n=0,$i=0,$t='N'){
       $val = "disabled";
     }
   }else{
-    $val = "";
+      //desde aca tn ontiveros
+//      $val = $d;
+      if($m=="Detalle" || $m=="Eliminar") {
+          if ($vb == "S") {
+              $val = "disabled";
+          } elseif ($d) {
+              $val = "disabled";
+          } elseif ($nc) {
+              $val = "disabled";
+          } elseif( $total>=1){
+              $val = "disabled";
+          }else {
+              $val = "";
+          }
+      }elseif($m=="Editar" || $m=="Gloaux"){
+          if($vb=="S"){
+              $val = "disabled";
+          }
+          elseif( $d){
+              $val = "disabled";
+          }elseif( $nc){
+              $val = "disabled";
+          }else{
+              $val = "";
+          }
+      }elseif($m=="Vobo") {
+              $val = "";
+      }elseif($m=="Gencontab") {
+          if ($_SESSION["sialmarol"] <> 'conta') {
+              $val = "disabled";
+          }
+      }
   }
-  
 	return $val;	
 }
 
@@ -274,14 +334,14 @@ function balm($a){
 
 function bprod($p){
 	global $db;
-	$sql="SELECT * FROM conpre20:producto WHERE cod='$p'";
+	$sql="SELECT * FROM conpre21:producto WHERE cod='$p'";
 	$r = $db->query($sql)->fetch(PDO::FETCH_ASSOC);	
 	return trim($r['des']);	
 }
 
 function bunimed($p){
 	global $db;
-	$sql="SELECT * FROM conpre20:unimedid WHERE cod='$p'";
+	$sql="SELECT * FROM conpre21:unimedid WHERE cod='$p'";
 	$r = $db->query($sql)->fetch(PDO::FETCH_ASSOC);
 	return trim($r['des']);	
 }
@@ -303,14 +363,14 @@ function bspart($a,$s){
 
 function bcta($p){
 	global $db;
-	$sql="SELECT * FROM conpre20:ctas WHERE cod='$p'";
+	$sql="SELECT * FROM conpre21:ctas WHERE cod='$p'";
 	$r = $db->query($sql)->fetch(PDO::FETCH_ASSOC);
 	return trim($r['des']);	
 }
 
 function bscta($p){
 	global $db;
-	$sql="SELECT * FROM conpre20:sctas WHERE cod='$p'";
+	$sql="SELECT * FROM conpre21:sctas WHERE cod='$p'";
 	$r = $db->query($sql)->fetch(PDO::FETCH_ASSOC);	
 	return trim($r['des']);	
 }

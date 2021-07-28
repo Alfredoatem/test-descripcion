@@ -43,13 +43,14 @@ else {
 }
 	
 $sql="SELECT count(*) as num FROM maealma WHERE voboalma in ('S','N') ".$aux;
+//echo $sql;
 $cont = $db->prepare($sql);
 $cont->execute();
 $r = $cont->fetch(PDO::FETCH_ASSOC);	
 $total=$r['num'];
 
 if ($total==0){
-  echo "<script type='text/javascript'>alert('No Existen Datos.\nIntroduzca otro parametro de Busqueda')";
+  echo "<script type='text/javascript'> alert('No Existen Datossssss.Introduzca otro parametro de Busqueda')";
   echo "document.location='formsrcprev.php'</script>";
   exit;
 }
@@ -250,19 +251,16 @@ $tpaginas = ceil($total/$registros);
                         <div class="col-lg-7">
                           <input name="txtsolpor" type="text" class="form-control" id="txtsolpor" maxlength="50" value="<?=htmlspecialchars(trim($row['ref1']))?>" required>
                         </div>
-                        <label class="col-lg-1 control-label">Pedido</label>
+                        <label class="col-lg-1 control-label">Cite</label>
                         <div class="col-lg-3">
-                          <input name="txtpedi" type="text" class="form-control" id="txtpedi" maxlength="10" value="<?=trim($row['ref2'])?>">
+                          <input name="txtcite" type="text" class="form-control" id="txtcite" maxlength="10" value="<?=trim($row['ref2'])?>">
                         </div>
                       </div>
                     </div>
                     <!-- /.col-lg-12 (nested) -->
                     <div class="col-lg-12">
                       <div class="form-group">
-                        <label class="col-lg-1 control-label">Cotizado.por</label>
-                        <div class="col-lg-7">
-                          <input name="txtcotpor" type="text" class="form-control" id="txtcotpor" maxlength="50" value="<?=trim($row['ref3'])?>">
-                        </div>
+
                         <label class="col-lg-1 control-label">Tip.Per.</label>
                         <div class="col-lg-3">
                           <select name="cbotiper" id="cbotiper" class="form-control" required>
@@ -597,10 +595,10 @@ $tpaginas = ceil($total/$registros);
             $disableprev = (($pagina - 1)>0)?"":"disabled";
             $disablenext = (($pagina + 1)<=$tpaginas)?"":"disabled";
             ?>
-              <li class="<?=$disableprev?>"><a href="list1i.php?pagina=<?="0".$link;?>"><span aria-hidden="true">&larr;</span> Primero</a></li>
-              <li class="<?=$disableprev?>"><a href="list1i.php?pagina=<?=($pagina-1).$link;?>">Anterior</a></li>
-              <li class="<?=$disablenext?>"><a href="list1i.php?pagina=<?=($pagina+1).$link;?>">Siguiente</a></li>
-              <li class="<?=$disablenext?>"><a href="list1i.php?pagina=<?=$tpaginas.$link;?>">Ultimo <span aria-hidden="true">&rarr;</span></a></li>
+              <li class="<?=$disableprev?>"><a href="list2i.php?pagina=<?="0".$link;?>"><span aria-hidden="true">&larr;</span> Primero</a></li>
+              <li class="<?=$disableprev?>"><a href="list2i.php?pagina=<?=($pagina-1).$link;?>">Anterior</a></li>
+              <li class="<?=$disablenext?>"><a href="list2i.php?pagina=<?=($pagina+1).$link;?>">Siguiente</a></li>
+              <li class="<?=$disablenext?>"><a href="list2i.php?pagina=<?=$tpaginas.$link;?>">Ultimo <span aria-hidden="true">&rarr;</span></a></li>
             <?
           }
           ?>

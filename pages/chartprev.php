@@ -1,4 +1,4 @@
-<? 
+<?php
 /************************************************/
 /*DESARROLLADO POR	:	ING. JOSE LEDO REBOLLO  */
 /*FECHA				:	27/02/2020 	 */

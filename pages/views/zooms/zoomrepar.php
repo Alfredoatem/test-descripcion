@@ -4,12 +4,20 @@ require_once "../../../functions/global.php";
 
 $criterio = "";
 
-if ($_GET["txtrepar"]!=''){
+if (isset($_GET["txtrepar"]) !=''){
 	$txtrepar=mb_strtoupper($_GET['txtrepar']);
 	$criterio .= "AND des matches '*$txtrepar*' ";
 }
+else{
+    $txtrepar="";
+}
 $registros = 5;
-$pagina = $_GET["pagina"];
+if(isset($_GET["pagina"])==null){
+    $pagina = 0;
+}
+else{
+    $pagina = $_GET["pagina"];
+}
 
 if (!$pagina) { 
 	$inicio = 0; 
@@ -121,7 +129,9 @@ $(function(){
       <ul class="pagination">
       <? 
       if($tpaginas > 1) {
-        $link = "&txtrepar=$txtrepar";
+          //if (isset($txtrepar)){
+              $link = "&txtrepar=$txtrepar";
+          //}
         $disableprev = (($pagina - 1)>0)?"":"disabled";
         $disablenext = (($pagina + 1)<=$tpaginas)?"":"disabled";
         ?>

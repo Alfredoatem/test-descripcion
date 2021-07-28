@@ -4,17 +4,17 @@ require_once "../../../functions/global.php";
 
 $criterio = "";
 
-if(isset($_GET["txtalm"])==null){
-    $txtalm = '';
+if(isset($_GET["txtprod"])==null){
+    $txtprod = '';
 }
 else{
-    $txtalm = $_GET["txtalm"];
+    $txtprod = $_GET["txtprod"];
+}
+if ($txtprod!=''){
+	$txtprod=mb_strtoupper($_GET['txtprod']);
+	$criterio .= "AND des matches '*$txtprod*' ";
 }
 
-if ($txtalm!=''){
-	$txtalm=mb_strtoupper($_GET['txtalm']);
-	$criterio .= "AND des matches '*$txtalm*' ";
-}
 $registros = 5;
 
 if(isset($_GET["pagina"])==null){
@@ -24,7 +24,6 @@ else{
     $pagina = $_GET["pagina"];
 }
 
-
 if (!$pagina) { 
 	$inicio = 0; 
 	$pagina = 1; 
@@ -32,13 +31,13 @@ if (!$pagina) {
 	$inicio = ($pagina - 1) * $registros; 
 }
 
-$sql = "SELECT count(*) as num FROM paramalmacen WHERE 1=1 ".$criterio;
+$sql = "SELECT count(*) as num FROM conpre21:producto WHERE 1=1 ".$criterio;
 $cont = $db->prepare($sql);
 $cont->execute();
 $r = $cont->fetch(PDO::FETCH_ASSOC);
 $total=$r['num'];
 
-$sql = "SELECT skip $inicio first $registros * FROM paramalmacen WHERE 1=1 ".$criterio;
+$sql = "SELECT skip $inicio first $registros * FROM conpre21:producto WHERE 1=1 ".$criterio;
 $sql .= "ORDER BY 1 ";
 $query = $db->prepare($sql);
 $query->execute();
@@ -53,7 +52,7 @@ $tpaginas = ceil($total/$registros);
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<title>Zoom Almacen</title>
+<title>Zoom Producto</title>
 <!-- Bootstrap Core CSS -->
 <link href="../../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -83,29 +82,29 @@ $tpaginas = ceil($total/$registros);
   }
 </style>
 <script type='text/javascript'>
-$(function(){
-	$('.sel').click(function(){
-		var index = $('.sel').index(this);
-		var valor = $('.codigo:eq('+index+')').text();
-        var indice = $('#indice').val();
-        var entrada = '#'+indice;
-		window.opener.$(entrada).val(valor).focusin();
-		self.close();
-	})
-  $('.pagination .disabled a, .pagination .active a').on('click', function(e) {
-    e.preventDefault();
-  });
-});
+    $(function(){
+        $('.sel').click(function(){
+            var index = $('.sel').index(this);
+            var valor = $('.codigo:eq('+index+')').text();
+            var indice = $('#indice').val();
+            var clase = '.hdncodprod:eq('+indice+')';
+            window.opener.$(clase).val(valor).focusin();
+            self.close();
+        })
+        $('.pagination .disabled a, .pagination .active a').on('click', function(e) {
+            e.preventDefault();
+        });
+    });
 </script>
 </head>
 
 <body>
   <div class="container">
-    <form role="form" class="form-horizontal" method="get" action="zoomalm.php">
+    <form role="form" class="form-horizontal" method="get" action="zoomprod.php">
       <div class="form-group">
         <div class="col-lg-12">
           <div class="input-group">
-            <input name="txtalm" class="form-control" placeholder="Almacen">
+            <input name="txtprod" class="form-control" placeholder="Almacen">
             <span class="input-group-btn">
               <button class="btn btn-primary" type="submit">Buscar</button>
             </span>
@@ -114,38 +113,44 @@ $(function(){
         </div>
       </div>
     </form>
-    <table class="table table-bordered table-striped table-hover">
-      <thead>
-        <tr class="bg-primary">
-          <th scope="col" width="15%">Cod.</th>
-          <th scope="col" width="70%">Repartición</th>
-          <th scope="col" width="15%"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <? while($row = $query->fetch(PDO::FETCH_ASSOC)) {?>
-        <tr>
-          <td height="25" class="codigo"><?=trim($row['cod'])?></td>
-          <td><?=trim($row['des'])?></td>
-          <td align="center"><a href="#" class="sel"><span class="fa fa-check-circle-o"></span></a></td>
-        </tr>
-        <?
-        }
-        ?>
-      </tbody>
-    </table>
+    <div class="table-responsive-sm">
+      <table class="table table-bordered table-striped table-hover"> <!--table-condensed-->
+        <thead>
+          <tr class="bg-primary">
+            <th scope="col" width="12%">Cod.</th>
+            <th scope="col" width="55%">Repartición</th>
+            <th scope="col" width="15%">Unidad</th>
+            <th scope="col" width="10%">Partida</th>
+            <th scope="col" width="8%"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <? while($row = $query->fetch(PDO::FETCH_ASSOC)) {?>
+          <tr>
+            <td height="25" class="codigo"><small><?=trim($row['cod'])?></small></td>
+            <td><small><?=trim($row['des'])?></small></td>
+            <td><small><?=bunimed(trim($row['codumed']))?></small></td>
+            <td><small><?=trim($row['codpar']).trim($row['codspar'])?></small></td>
+            <td align="center"><a href="#" class="sel"><span class="fa fa-check-circle-o"></span></a></td>
+          </tr>
+          <?
+          }
+          ?>
+        </tbody>
+      </table>
+    </div>
     <nav aria-label="Page navigation">
       <ul class="pagination">
-      <?
+      <? 
       if($tpaginas > 1) {
-        $link = "&txtalm=$txtalm&indice=".$_GET['indice'];
+        $link = "&txtprod=$txtprod&indice=".$_GET['indice'];
         $disableprev = (($pagina - 1)>0)?"":"disabled";
         $disablenext = (($pagina + 1)<=$tpaginas)?"":"disabled";
         ?>
-          <li class="<?=$disableprev?>"><a href="zoomalm.php?pagina=<?="0".$link;?>"><span aria-hidden="true">&larr;</span> Primero</a></li>
-          <li class="<?=$disableprev?>"><a href="zoomalm.php?pagina=<?=($pagina-1).$link;?>">Anterior</a></li>
-          <li class="<?=$disablenext?>"><a href="zoomalm.php?pagina=<?=($pagina+1).$link;?>">Siguiente</a></li>
-          <li class="<?=$disablenext?>"><a href="zoomalm.php?pagina=<?=$tpaginas.$link;?>">Ultimo <span aria-hidden="true">&rarr;</span></a></li>
+          <li class="<?=$disableprev?>"><a href="zoomprod2.php?pagina=<?="0".$link;?>"><span aria-hidden="true">&larr;</span> Primero</a></li>
+          <li class="<?=$disableprev?>"><a href="zoomprod2.php?pagina=<?=($pagina-1).$link;?>">Anterior</a></li>
+          <li class="<?=$disablenext?>"><a href="zoomprod2.php?pagina=<?=($pagina+1).$link;?>">Siguiente</a></li>
+          <li class="<?=$disablenext?>"><a href="zoomprod2.php?pagina=<?=$tpaginas.$link;?>">Ultimo <span aria-hidden="true">&rarr;</span></a></li>
         <? 
       }
       ?>

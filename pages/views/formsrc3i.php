@@ -11,21 +11,39 @@ include "../../functions/global.php";
 
 $criterio='';
 
-if($_POST){	
-	$txtgest=$_POST['txtgest'];
-	$txtdcto=$_POST['txtdcto'];
-	$txtnro=$_POST['txtnro'];
-	$txtfini=$_POST['txtfini'];
-  $txtffin=$_POST['txtffin'];
-	$txthtd=$_POST['txthtd'];
-	$txtglosa=$_POST['txtglosa'];
-	$hdnrepar=$_POST['hdnrepar'];
-	$txtemp=$_POST['txtemp'];
-	$txtfact=$_POST['txtfact'];
-  $cboffin=$_POST['cboffin'];
-	$txtsolpor=$_POST['txtsolpor'];
-	$txtcotpor=$_POST['txtcotpor'];
-  $cbotiper=$_POST['cbotiper'];
+if($_POST){
+    $txtgest=$_POST['txtgest'];
+    $txtdcto=$_POST['txtdcto'];
+    $txtnro=$_POST['txtnro'];
+    $txtfini=$_POST['txtfini'];
+    $txtffin=$_POST['txtffin'];
+    $txthtd=$_POST['txthtd'];
+    $txtdctoconta=$_POST['txtdctoconta'];
+    $txtnroconta=$_POST['txtnroconta'];
+    $txtglosa=$_POST['txtglosa'];
+    $hdnrepar=$_POST['hdnrepar'];
+    $txtemp=$_POST['txtemp'];
+    $txtfact=$_POST['txtfact'];
+    $cboffin=$_POST['cboffin'];
+    $txtsolpor=$_POST['txtsolpor'];
+    $txtcotpor=$_POST['txtcotpor'];
+    $cbotiper=$_POST['cbotiper'];
+
+
+//	$txtgest=$_POST['txtgest'];
+//	$txtdcto=$_POST['txtdcto'];
+//	$txtnro=$_POST['txtnro'];
+//	$txtfini=$_POST['txtfini'];
+//  $txtffin=$_POST['txtffin'];
+//	$txthtd=$_POST['txthtd'];
+//	$txtglosa=$_POST['txtglosa'];
+//	$hdnrepar=$_POST['hdnrepar'];
+//	$txtemp=$_POST['txtemp'];
+//	$txtfact=$_POST['txtfact'];
+//  $cboffin=$_POST['cboffin'];
+//	$txtsolpor=$_POST['txtsolpor'];
+//	$txtcotpor=$_POST['txtcotpor'];
+//  $cbotiper=$_POST['cbotiper'];
   
 	if($txtgest!=""){
 		$a = ($criterio=='')?'':" AND ";
@@ -88,7 +106,7 @@ if($_POST){
 		$criterio .= " $a codtip = '".$cbotiper."' ";
 	}
 	
-	header('Location:formres3i.php?criterio='.base64_encode($criterio));	
+	header('Location:list3i.php?criterio='.base64_encode($criterio));
 }
 ?>
 <!DOCTYPE html>
@@ -96,6 +114,8 @@ if($_POST){
   <head>
     <title>Buscar Documento</title>
     <? include("inc/header.php") ?>
+      <!-- Codigo JavaScript -->
+      <script src="../js/globalform.js"></script>
     <!-- Custom Codigo JavaScript -->
     <script src="../js/formsrc3i.js"></script> 
   </head>
@@ -113,7 +133,7 @@ if($_POST){
         </div>
         <!-- /.row -->
         <div class="row">
-          <form role="form" class="form-horizontal" id="form">
+            <form role="form" class="form-horizontal" action="formsrc3i.php" method="post">
             <div class="col-lg-12">
               <div id="message"></div>
               <div class="panel panel-primary">
@@ -238,16 +258,18 @@ if($_POST){
                         </div>
                       </div>
                     </div>
-                    <!-- /.col-lg-12 (nested) -->
-                    <div class="col-lg-12">
-                      <div class="form-group">
-                        <div class="col-lg-1"></div>
-                        <div class="col-lg-3">
-                          <button type="submit" class="btn btn-primary">Enviar</button>
-                        </div>
+                      <!-- /.col-lg-12 (nested) -->
+                      <div class="col-lg-12">
+                          <div class="form-group">
+                              <div class="col-lg-1"></div>
+                              <div class="col-lg-3">
+                                  <input type="button" onclick="location.href='../views/formins3i.php';" class="btn btn-lg btn-warning" value="Registrar">
+                                  <button type="submit" class="btn btn-lg btn-primary">Buscar</button>
+                                  <button type="reset" class="btn btn-lg btn-danger">Limpiar</button>
+                              </div>
+                          </div>
                       </div>
-                    </div>
-                    <!-- /.col-lg-12 (nested) --> 
+                      <!-- /.col-lg-12 (nested) -->
                   </div>
                   <!-- /.row (nested) --> 
                 </div>

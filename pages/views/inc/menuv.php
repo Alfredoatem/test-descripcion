@@ -13,7 +13,7 @@ $(function(){
   <div class="sidebar-nav navbar-collapse">
     <ul class="nav" id="side-menu">
       <li role="presentation" class="disabled"><a href="#"><?=buseralma($_SESSION["sialmausr"],$_SESSION["sialmagalm"])?></a></li>
-      <li> <a href="../inicio.php"><i class="fa fa-home fa-fw"></i> Inicio</a> </li>
+      <li> <a href="#"><i class="fa fa-home fa-fw"></i> Inicio</a> </li>
       <li> <a href="#"><i class="fa fa-archive fa-fw"></i> Transacciones<span class="fa arrow"></span></a>
         <ul class="nav nav-second-level" id="transac">
         </ul>

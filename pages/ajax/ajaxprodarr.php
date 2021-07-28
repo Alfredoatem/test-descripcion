@@ -5,7 +5,7 @@ require_once "../../functions/global.php";
 
 $valor = $_POST["valor"];
 
-$sql1 = $db->prepare("SELECT * FROM conpre20:producto WHERE cod = '$valor'");
+$sql1 = $db->prepare("SELECT * FROM conpre21:producto WHERE cod = '$valor'");
 $sql1->execute();
 $rs = $sql1->fetch(PDO::FETCH_ASSOC);	
 

@@ -16,7 +16,7 @@ $p->bindParam(1, $uuser , PDO::PARAM_STR);
 $p->bindParam(2, $upass , PDO::PARAM_STR);
 $p->execute();
 $row = $p->fetch(PDO::FETCH_ASSOC);	
-
+echo $row;
 if($row['nr']==1){
 
   $_SESSION["sialmamodulo"] = "sialma";

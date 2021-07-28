@@ -84,17 +84,17 @@ $tpaginas = ceil($total/$registros);
 </style>
 <script type='text/javascript'>
 $(function(){
-	$('.sel').click(function(){
-		var index = $('.sel').index(this);
-		var valor = $('.codigo:eq('+index+')').text();
+    $('.sel').click(function(){
+        var index = $('.sel').index(this);
+        var valor = $('.codigo:eq('+index+')').text();
         var indice = $('#indice').val();
-        var entrada = '#'+indice;
-		window.opener.$(entrada).val(valor).focusin();
-		self.close();
-	})
-  $('.pagination .disabled a, .pagination .active a').on('click', function(e) {
-    e.preventDefault();
-  });
+        var clase = '.hdncodalm:eq('+indice+')';
+        window.opener.$(clase).val(valor).focusin();
+        self.close();
+    })
+    $('.pagination .disabled a, .pagination .active a').on('click', function(e) {
+        e.preventDefault();
+    });
 });
 </script>
 </head>
@@ -142,10 +142,10 @@ $(function(){
         $disableprev = (($pagina - 1)>0)?"":"disabled";
         $disablenext = (($pagina + 1)<=$tpaginas)?"":"disabled";
         ?>
-          <li class="<?=$disableprev?>"><a href="zoomalm.php?pagina=<?="0".$link;?>"><span aria-hidden="true">&larr;</span> Primero</a></li>
-          <li class="<?=$disableprev?>"><a href="zoomalm.php?pagina=<?=($pagina-1).$link;?>">Anterior</a></li>
-          <li class="<?=$disablenext?>"><a href="zoomalm.php?pagina=<?=($pagina+1).$link;?>">Siguiente</a></li>
-          <li class="<?=$disablenext?>"><a href="zoomalm.php?pagina=<?=$tpaginas.$link;?>">Ultimo <span aria-hidden="true">&rarr;</span></a></li>
+          <li class="<?=$disableprev?>"><a href="zoomalm2.php?pagina=<?="0".$link;?>"><span aria-hidden="true">&larr;</span> Primero</a></li>
+          <li class="<?=$disableprev?>"><a href="zoomalm2.php?pagina=<?=($pagina-1).$link;?>">Anterior</a></li>
+          <li class="<?=$disablenext?>"><a href="zoomalm2.php?pagina=<?=($pagina+1).$link;?>">Siguiente</a></li>
+          <li class="<?=$disablenext?>"><a href="zoomalm2.php?pagina=<?=$tpaginas.$link;?>">Ultimo <span aria-hidden="true">&rarr;</span></a></li>
         <? 
       }
       ?>

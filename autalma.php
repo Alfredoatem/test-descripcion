@@ -1,5 +1,6 @@
 <?php
 include "seguridad_alm.php";
+//echo $_SESSION["authsialma"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,7 +25,8 @@ include "seguridad_alm.php";
 <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
 <!-- Bootstrap Select CSS-->
-<link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" type="text/css">
+<!--<link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" type="text/css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css" integrity="sha512-ARJR74swou2y0Q2V9k0GbzQ/5vJ2RBSoCWokg4zkfM29Fb3vZEQyv0iWBMW/yvKgyHSR/7D64pFMmU8nYmbRkg==" crossorigin="anonymous" />
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -38,7 +40,8 @@ include "seguridad_alm.php";
 
 <!-- Metis Menu Plugin JavaScript --> 
 <script src="vendor/metisMenu/metisMenu.min.js"></script> 
-<script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+<!--<script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js" integrity="sha512-yDlE7vpGDP7o2eftkCiPZ+yuUyEcaBwoJoIhdXv71KZWugFqEphIS3PU60lEkFaz8RxaVsMpSvQxMBaKVwA5xg==" crossorigin="anonymous"></script>
 <!-- Custom Theme JavaScript --> 
 <script src="resources/scripts/sb-admin-2/js/sb-admin-2.js"></script>
 <script type="text/javascript">
