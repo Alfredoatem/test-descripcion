@@ -83,7 +83,7 @@ if($_POST){
 		$criterio .= " $a codtip = '".$cbotiper."' ";
 	}
 	
-	header('Location:formres1i.php?criterio='.base64_encode($criterio));	
+	header('Location:list1s.php?criterio='.base64_encode($criterio));
 }
 ?>
 <!DOCTYPE html>
@@ -91,6 +91,8 @@ if($_POST){
   <head>
     <title>Buscar Documento</title>
     <? include("inc/header.php") ?>
+      <!-- Codigo JavaScript -->
+      <script src="../js/globalform.js"></script>
     <!-- Custom Codigo JavaScript -->
     <script src="../js/formsrc1s.js"></script> 
   </head>
@@ -108,7 +110,7 @@ if($_POST){
         </div>
         <!-- /.row -->
         <div class="row">
-          <form role="form" class="form-horizontal" id="form">
+            <form role="form" class="form-horizontal" action="formsrc1s.php" method="post">
             <div class="col-lg-12">
               <div id="message"></div>
               <div class="panel panel-primary">
@@ -197,7 +199,7 @@ if($_POST){
                       <div class="form-group">
                         <label class="col-lg-1 control-label">Fuente</label>
                         <div class="col-lg-3">
-                          <select name="cboffin" id="cboffin" class="form-control" required>
+                          <select name="cboffin" id="cboffin" class="form-control" >
                           </select>
                         </div>
                       </div>
@@ -229,16 +231,18 @@ if($_POST){
                         </div>
                       </div>
                     </div>
-                    <!-- /.col-lg-12 (nested) -->
-                    <div class="col-lg-12">
-                      <div class="form-group">
-                        <div class="col-lg-1"></div>
-                        <div class="col-lg-3">
-                          <button type="submit" class="btn btn-primary">Enviar</button>
-                        </div>
+                      <!-- /.col-lg-12 (nested) -->
+                      <div class="col-lg-12">
+                          <div class="form-group">
+                              <div class="col-lg-1"></div>
+                              <div class="col-lg-3">
+                                  <input type="button" onclick="location.href='../views/formins1s.php';" class="btn btn-lg btn-warning" value="Registrar">
+                                  <button type="submit" class="btn btn-lg btn-primary">Buscar</button>
+                                  <button type="reset" class="btn btn-lg btn-danger">Limpiar</button>
+                              </div>
+                          </div>
                       </div>
-                    </div>
-                    <!-- /.col-lg-12 (nested) --> 
+                      <!-- /.col-lg-12 (nested) -->
                   </div>
                   <!-- /.row (nested) --> 
                 </div>

@@ -100,7 +100,7 @@ $tpaginas = ceil($total/$registros);
 
 <body>
   <div class="container">
-    <form role="form" class="form-horizontal" method="get" action="zoomprod.php">
+    <form role="form" class="form-horizontal" method="get" action="zoomprod2.php">
       <div class="form-group">
         <div class="col-lg-12">
           <div class="input-group">

@@ -87,8 +87,11 @@ $(function(){
     $('.sel').click(function(){
         var index = $('.sel').index(this);
         var valor = $('.codigo:eq('+index+')').text();
+        //alert(valor);
+        //alert(index);
         var indice = $('#indice').val();
         var clase = '.hdncodalm:eq('+indice+')';
+        //alert(clase);
         window.opener.$(clase).val(valor).focusin();
         self.close();
     })
@@ -101,7 +104,7 @@ $(function(){
 
 <body>
   <div class="container">
-    <form role="form" class="form-horizontal" method="get" action="zoomalm.php">
+    <form role="form" class="form-horizontal" method="get" action="zoomalm2.php">
       <div class="form-group">
         <div class="col-lg-12">
           <div class="input-group">

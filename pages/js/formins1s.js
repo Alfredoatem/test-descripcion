@@ -31,6 +31,7 @@ $(function(){
       });
     });
 
+
   $(".btn_canceldet, .btn_canceldesc, .btn_cancelpyv").click(function(){
     location.reload();
   })
@@ -79,16 +80,50 @@ $(function(){
     location.reload();
   });
 
+  // $(document).on('click','.enlacesal',function(){
+  //   //alert($('#cbotiper').val());
+  //   if($('#cbotiper').val()==''){
+  //     $(".enlacesal").removeAttr("onclick");
+  //   }
+  // }).trigger('click');
+  //
+  // $('form.maestro').find('input[name=prueba]').each(function(){
+  //   $(this).attr("onclick","new_function_name()");
+  // });
+
 });
 
 function enlace(){
 
-  $(".copy").each(function(index, element) {
+    $(".copy").each(function(index, element) {
+      //alert($('#cbotiper').val());
+        if($('#cbotiper').val() == null){
+          //alert('aca');
+          // $('#message').html('<div class="alert alert-danger fade in"><button type="button" class="close close-alert" data-dismiss="alert" aria-hidden="true">×</button>'+html+'</div>');
+        }else {
+          $(".enlacesal:eq(" + index + ")").attr("onclick", "popup('zooms/zoomsal1.php?indice=" + index + "&cbotiper=" + $("#cbotiper").val() + "&codgranalm=" + $("#hdncodgranalm").val() + "&codprod=" + $(".hdncodprod:eq(" + index + ")").val() + "&codalm=" + $(".hdncodalm:eq(" + index + ")").val() + "','700','360')")
+        }
+      // $(".enlacesal:eq("+index+")").attr("onclick","#")
 
+      // $(".hdncoddet:eq("+index+")").focusin(function() {
+    //   // alert('hola2');
+    //   $.ajax({
+    //     type : 'POST',
+    //     url : "../ajax/ajaxalmadet.php",
+    //     data : "valor="+$(".hdncoddet:eq("+index+")").val(),
+    //     success : function(data){
+    //       var json = eval("(" + data + ")");
+    //       // alert('hola');
+    //       $('.txtdcto_m:eq('+index+')').val(json.value);
+    //     }
+    //   });
+    // });
     $(".enlacealm:eq("+index+")").attr("onclick","popup('zooms/zoomalm2.php?indice="+index+"','700','360')")
-    $(".enlaceprod:eq("+index+")").attr("onclick","popup('zooms/zoomprod2.php?indice="+index+"&partida="+$('.txtpart').val()+"','700','360')")
+    //$(".enlaceprod:eq("+index+")").attr("onclick","popup('zooms/zoomprod2.php?indice="+index+"&partida="+$('.txtpart').val()+"','700','360')")
+    $(".enlaceprod:eq("+index+")").attr("onclick","popup('zooms/zoomprod2.php?indice="+index+"','700','360')")
     $(".hdncodalm:eq("+index+")").focusin(function() {
       // alert('hola2');
+      enlace();
       $.ajax({
         type : 'POST',
         url : "../ajax/ajaxalmarr.php",
@@ -101,6 +136,7 @@ function enlace(){
       });
     });
     $(".hdncodprod:eq("+index+")").focusin(function() {
+      enlace();
       $.ajax({
         type : 'POST',
         url : "../ajax/ajaxprodarr.php",
