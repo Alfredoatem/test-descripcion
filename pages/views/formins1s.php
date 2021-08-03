@@ -178,11 +178,11 @@ include "../../functions/global.php";
                         <th scope="col">Almacen</th>
                         <th scope="col">Producto</th>
 <!--                        <th scope="col">Buscar Ingreso</th>-->
-                        <th scope="col">Dcto M</th>
-                        <th scope="col">Nro M</th>
+
                         <th scope="col">Buscar Ingreso</th>
-                        <th scope="col">Cantidad</th>
                         <th scope="col">P.U.</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Saldo</th>
                         <th scope="col">Monto</th>
                         <th></th>
                     </tr>
@@ -191,8 +191,6 @@ include "../../functions/global.php";
                       <tr class="copy">
                             <td width="18%">
                                 <div class="input-group">
-
-
                                     <input type="hidden" name="hdncodalm[]" class="hdncodalm" value=""/>
                                     <input name="txtalm[]" class="form-control input-sm txtalm"   data-toggle="tooltip" data-placement="left" title="" readonly/>
                                     <span class="input-group-btn">
@@ -211,21 +209,22 @@ include "../../functions/global.php";
                             </span>
                                 </div>
                             </td>
-                            <td width="7%">
-                                <input name="txtdcto_m[]" class="form-control input-sm txtdcto_m" data-toggle="tooltip" data-placement="left" title="Dcto M" readonly />
-                            </td>
-                            <td width="7%">
-                                <input name="txtnro_m[]" class="form-control input-sm txtnro_m" data-toggle="tooltip" data-placement="left" title="Nro M" readonly />
-                            </td>
+
+                                <input type="hidden" name="txtdcto_m[]" class="form-control input-sm txtdcto_m" data-toggle="tooltip" data-placement="left" title="Dcto M" readonly />
+
+
+                                <input type="hidden" name="txtnro_m[]" class="form-control input-sm txtnro_m" data-toggle="tooltip" data-placement="left" title="Nro M" readonly />
+
                           <td width="7%">
-<!--                              <input type="hidden" name="hdncoddet[]"  class="hdncoddet" />-->
+                              <input type="hidden" name="mate[]"  class="mate" />
                               <span style="text-align: center" class="input-group-btn">
                               <button name="prueba" class="btn btn-sm btn-default enlacesal" type="button"><i class="fa fa-search"></i>
                               </button>
                             </span>
                           </td>
-                            <td width="15%"><input name="txtcant[]" class="form-control input-sm txtcant" maxlength="12" /></td>
-                            <td width="15%"><input name="txtpu[]" class="form-control input-sm txtpu" maxlength="18"  /></td>
+                          <td width="15%"><input name="txtpu[]" class="form-control input-sm txtpu" maxlength="18" readonly /></td>
+                          <td width="15%"><input name="txtcant[]" class="form-control input-sm txtcant" maxlength="12" /></td>
+                          <td><input name="saldocant" class="form-control input-sm" id="saldocant" readonly></td>
                             <td width="15%"><input name="txtmonto[]" class="form-control input-sm txtmonto" readonly /></td>
                             <td width="2%" align="center">
                                 <a class="add"><span class="fa fa-plus fa-2x"></span></a>
@@ -235,6 +234,7 @@ include "../../functions/global.php";
                     <tfoot>
                     <tr>
                         <th scope="row" colspan="6" align="right">Total</th>
+
                         <td><input name="monto" class="form-control input-sm" id="monto" readonly></td>
                         <td></td>
                     </tr>

@@ -124,10 +124,13 @@ $tpaginas = ceil($total/$registros);
 $(function(){
     $('.sel').click(function(){
         var index = $('.sel').index(this);
-        var valor = $('.codigo:eq('+index+')').text();
+        var valor1 = $('.codigo1:eq('+index+')').text();
+        var valor2 = $('.codigo2:eq('+index+')').text();
+        var valor3 = $('.codigo3:eq('+index+')').text();
         var indice = $('#indice').val();
-        var clase = '.hdncodalm:eq('+indice+')';
-        window.opener.$(clase).val(valor).focusin();
+        var mate = '.mate:eq('+indice+')';
+        var matetotal= valor1+";"+valor2+";"+valor3;
+        window.opener.$(mate).val(matetotal).focusin();
         self.close();
     })
     $('.pagination .disabled a, .pagination .active a').on('click', function(e) {
@@ -182,8 +185,8 @@ $(function(){
           <td height="5"><?=trim($r3['des'])?></td>
           <td height="5"><?=trim($r1['des'])?></td>
           <td height="5"><?=trim($r2['des'])?></td>
-          <td height="5"><?=trim($row['suma1'])?></td>
-          <td height="5"><?=trim($row['pu'])?></td>
+          <td height="5"><?=trim($row['suma3'])?></td>
+          <td height="5" class="codigo3"><?=trim($row['pu'])?></td>
             <td align="center"><a href="#" class="sel"><span class="fa fa-check-circle-o"></span></a></td>
         </tr>
         <?

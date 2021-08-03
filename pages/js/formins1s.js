@@ -80,44 +80,58 @@ $(function(){
     location.reload();
   });
 
-  // $(document).on('click','.enlacesal',function(){
-  //   //alert($('#cbotiper').val());
-  //   if($('#cbotiper').val()==''){
-  //     $(".enlacesal").removeAttr("onclick");
-  //   }
-  // }).trigger('click');
-  //
-  // $('form.maestro').find('input[name=prueba]').each(function(){
-  //   $(this).attr("onclick","new_function_name()");
-  // });
+ //prueba
+  $(document).on('keyup','.txtcant,.txtpu',function(){
+    var importe = 0;
+    $('.txtcant').each(function(index, element){
+      var c = eval($(this).val());
+      var p = eval($('.txtpu:eq('+index+')').val())
+      if(c==null || c=='') c=0;
+      if(p==null || p=='') p=0;
+      importe = importe + (c*p);
+      var cal = $('.txtcant:eq('+index+')').val() * $('.txtpu:eq('+index+')').val()
+      $('.txtmonto:eq('+index+')').val(cal.toFixed(2))
+      $.ajax({
+        type : 'POST',
+        url : "../ajax/ajaxsaldocant.php",
+        data : "codprod="+$(".hdncodprod:eq("+index+")").val()+"&dcto_m="+$(".txtdcto_m:eq("+index+")").val()+"&nro_m="+$(".txtnro_m:eq("+index+")").val()+"&pu="+$(".txtpu:eq("+index+")").val()+"&txtcant="+$(".txtcant:eq("+index+")").val()+"&codtip="+$("#cbotiper").val(),
+        success : function(data){
+          var json = eval("(" + data + ")");
+          // alert('hola');
+          // $('#saldocant:eq('+index+')').val(json.value+";"+json.result2+";"+json.result3+";"+json.result4+";"+json.result5+";"+json.result6+";"+json.result7);
+          $('#saldocant:eq('+index+')').val(json.value);
+        }
+      });
+    });
+    $('#monto').val(importe.toFixed(2));
+  });
+
+  $(".txtcant,.txtpu").trigger("keyup");
+  //fin
+  $(document).on('change','#cbotiper',function(){
+      enlace();
+  });
 
 });
 
+
 function enlace(){
-
     $(".copy").each(function(index, element) {
-      //alert($('#cbotiper').val());
-        if($('#cbotiper').val() == null){
-          //alert('aca');
-          // $('#message').html('<div class="alert alert-danger fade in"><button type="button" class="close close-alert" data-dismiss="alert" aria-hidden="true">×</button>'+html+'</div>');
-        }else {
-          $(".enlacesal:eq(" + index + ")").attr("onclick", "popup('zooms/zoomsal1.php?indice=" + index + "&cbotiper=" + $("#cbotiper").val() + "&codgranalm=" + $("#hdncodgranalm").val() + "&codprod=" + $(".hdncodprod:eq(" + index + ")").val() + "&codalm=" + $(".hdncodalm:eq(" + index + ")").val() + "','700','360')")
-        }
-      // $(".enlacesal:eq("+index+")").attr("onclick","#")
+      $(".enlacesal:eq(" + index + ")").attr("onclick", "popup('zooms/zoomsal1.php?indice=" + index + "&cbotiper=" + $("#cbotiper").val() + "&codgranalm=" + $("#hdncodgranalm").val() + "&codprod=" + $(".hdncodprod:eq(" + index + ")").val() + "&codalm=" + $(".hdncodalm:eq(" + index + ")").val() + "','700','360')")
+      // $(".enlacesal:eq(" + index + ")").attr("onclick", "popup('zooms/zoomsal1.php?indice=" + index + "&cbotiper=" + $("#cbotiper").val() + "&codgranalm=" + $("#hdncodgranalm").val() + "&codprod=" + $(".hdncodprod:eq(" + index + ")").val() + "&codalm=" + $(".hdncodalm:eq(" + index + ")").val() + "','700','360')")
 
-      // $(".hdncoddet:eq("+index+")").focusin(function() {
-    //   // alert('hola2');
-    //   $.ajax({
-    //     type : 'POST',
-    //     url : "../ajax/ajaxalmadet.php",
-    //     data : "valor="+$(".hdncoddet:eq("+index+")").val(),
-    //     success : function(data){
-    //       var json = eval("(" + data + ")");
-    //       // alert('hola');
-    //       $('.txtdcto_m:eq('+index+')').val(json.value);
-    //     }
-    //   });
-    // });
+      //$(".enlacesal:eq("+index+")").attr("onclick","#")
+
+      $(".mate:eq("+index+")").focusin(function() {
+        var texto = $(this).val(),
+            separador = ";",
+            textoseparado = texto.split(separador);
+            //console.log(textoseparado);
+            $(".txtdcto_m:eq("+index+")").val(textoseparado[0]);
+            $(".txtnro_m:eq("+index+")").val(textoseparado[1]);
+            $(".txtpu:eq("+index+")").val(textoseparado[2]);
+      });
+
     $(".enlacealm:eq("+index+")").attr("onclick","popup('zooms/zoomalm2.php?indice="+index+"','700','360')")
     //$(".enlaceprod:eq("+index+")").attr("onclick","popup('zooms/zoomprod2.php?indice="+index+"&partida="+$('.txtpart').val()+"','700','360')")
     $(".enlaceprod:eq("+index+")").attr("onclick","popup('zooms/zoomprod2.php?indice="+index+"','700','360')")
