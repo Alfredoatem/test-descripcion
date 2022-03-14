@@ -1,5 +1,5 @@
 <?php
-require_once "../seguridad.php";
+//require_once "../seguridad.php";
 require_once "../../connections/connect.php";
 require_once "../../functions/global.php";
 

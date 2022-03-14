@@ -432,3 +432,221 @@ table.dataTable thead .sorting:after {
     border-left-width: 0;
   }
 }
+
+/* ICONO EDIT DETALLE SALIDA */
+a.detalle_edit > span{
+  cursor: pointer;
+}
+/* INPUT DE ALMACEN */
+.txtalm-detalle{
+  width: 121% !important;  /*aumentar el ancho del input para tapar el boton de cambio de almacen*/
+  z-index: 20 !important;  /*poner el input por encima del boton de cambio de almacen*/
+  transition: 0.5s cubic-bezier(0,.61,.36,.99);
+}
+/* INPUT DE PRODUCTO */
+.txtprod-detalle{
+  width: 121% !important; /*aumentar el ancho del input para tapar el boton de cambio de producto*/  
+  z-index: 20 !important;  /*poner el input por encima del boton de cambio de producto*/
+  transition: 0.5s cubic-bezier(0,.61,.36,.99);
+}
+.txtalm-detalle.detalle-edit, .txtprod-detalle.detalle-edit{ /*dar la funcionalidad solo cuando los inputs tengan la clase 'detalle-edit' → asi se puede controlar su funcionamiento dinamico desde js*/
+  width: 100% !important;
+  transition: 0.5s cubic-bezier(0,.61,.36,.99);
+}
+/* BOTON PARA SELECCIONAR EL INGRESO */
+.btn-ingreso{
+  overflow: hidden; /*quitar la vista del excedente del boton para cambiar el ingreso → asi dar un cambio de icono tipo carrusel*/
+  padding: 0px 0px;
+  box-sizing: border-box;
+  width: 35px;
+}
+.btn-ingreso > i{
+  margin: 0px;
+  font-size: 15px;
+  padding: 5px;
+  transition: 0.5s cubic-bezier(0,.61,.36,.99);
+}
+.btn-ingreso > i:nth-child(1){
+  background-color: #eee;
+  width: 100%;
+  height: 100%;
+  cursor: not-allowed;
+} 
+.btn-ingreso.editar > i:nth-child(1){
+  background-color: #eee;
+  width: 100%;
+  height: 100%;
+  margin-left: -40px;
+} 
+/* TABLA DE DETALLE */
+.animate-bottom {
+  position: relative;
+  animation: animatebottom 0.4s;
+}
+
+@keyframes animatebottom {
+  from {
+    bottom: -300px;
+    opacity: 0;
+  }
+
+  to {
+    bottom: 0;
+    opacity: 1;
+  }
+}
+/* CONTENEDOR SALDO [modal auxiliar para ver el saldo de cada fila editada] */
+#contenedorSaldo{
+  opacity: 0;
+  position: absolute;
+  width: 900px;
+  left: 0px;
+  z-index: -10000 !important; /*el contenedor se inicia oculto y fuera del acceso del usuario*/
+  top: 350px;
+  border: none;
+  background-color: #fff;
+  box-sizing: border-box;
+  padding: 15px 25px 35px 25px;
+  border-radius: 0px 0px 15px 15px;
+  box-shadow: 1px 1px 21px -2px rgba(0,0,0,0.73);
+  -webkit-box-shadow: 1px 1px 21px -2px rgba(0,0,0,0.73);
+  -moz-box-shadow: 1px 1px 21px -2px rgba(0,0,0,0.73);
+  left: -50%;
+  transform: translateX(-50%);
+  transition: 0.5s ;
+}
+#contenedorSaldo.mostrar{ /*cambio dinamico de accion del modal de saldo controlado por js*/
+  z-index: 10000 !important; /*el contenedor se hace visible al usuario*/
+  opacity: 1;  
+}
+#contenedorSaldo{
+  display: grid; /*estructura del contenedor tipo malla para un mejor control de la posicion de los elementos*/
+  grid-template-rows: auto; /*1 fila*/
+  grid-template-columns: 100px 5px auto; /*3 columnas*/
+  grid-gap: 15px;
+}
+/* linea divisora */
+#contenedorSaldo li.divider{
+  list-style: none;
+  width: 1px;
+  margin: 15px 0px 15px 0px;
+  background: #c3c3c3;
+  height: 100%;
+}
+/* CUERPO DEL CONTENEDOR DE SALDO */
+#contenedorSaldo .cuerpoSaldo{
+  display: grid; /*estructura del contenedor tipo malla para un mejor control de la posicion de los elementos*/
+  grid-template-rows: auto; /*1 fila*/
+  grid-template-columns: 30% 20px 30% 20px auto; /*5 columnas*/
+  grid-gap: 15px; /*espaciado de 15 pixeles entre columnas y filas*/
+}
+/* TITULO DEL CONTENEDOR DE SALDO */
+#contenedorSaldo .header{ /*alineamos todos los datos al centro de cada celda*/
+  display: flex;
+  justify-content: center ;
+  align-items: center ;
+}
+#contenedorSaldo .cuerpoSaldo div,
+#contenedorSaldo .headerSaldo,
+#contenedorSaldo .cuerpoSaldo span{
+  display: flex;
+  justify-content: center ;
+  align-items: center ;
+  float: right;
+  box-sizing: border-box ;  
+  font-weight: normal;
+}
+#contenedorSaldo .cuerpoSaldo span{  
+  font-size: 25px;
+  padding: 20px 0 0 0;
+}
+#contenedorSaldo .headerSaldo{
+  flex-flow: column;
+  text-align: center;  
+}
+#contenedorSaldo .cuerpoSaldo div{
+  box-sizing: border-box ;
+  padding: 10px ;
+  color: #707070;
+  font-family: Arial, Helvetica, sans-serif;
+  flex-flow: column;
+}
+#contenedorSaldo .cuerpoSaldo div input{
+  width: 100%;
+  padding: 5px 15px 5px 10px;
+  border-radius: 5px;
+  border: 0.5px solid #707070;
+  text-align: right;
+  display: inline-table;
+}
+#contenedorSaldo .cuerpoSaldo div label{
+  width: 100%;
+  display: inline-table;
+  text-align: center;
+}
+
+/* CONTROLES DE CADA FILA [editar, cancelar, actualizar, eliminar] */
+.detalle_edit.disabled, .detalle_edit.disabled > span{ /*control dinamico de los controles que esten deshabilitados*/
+  cursor: not-allowed !important;
+}
+ul.acciones-detalle{
+  box-sizing: border-box;
+  padding: 15px 5px 15px 5px;
+  z-index: 10100 !important;
+}
+ul.acciones-detalle > li > a {
+  font-size: 15px;
+  display: grid;
+  grid-template-columns: 30px auto;
+  cursor: pointer;
+}
+ul.acciones-detalle > li > a > span{
+  display: flex;
+  justify-content: left  ;
+  align-items: left ;
+}
+ul.acciones-detalle > li {
+  margin-bottom: 15px;
+}
+ul.acciones-detalle > li:last-child {
+ margin-bottom: 0px;
+}
+.dropdown-menu {
+  top: 0;
+  left: 100%;
+}
+
+/* CONTENEDOR PARA LAS NOTIFICACIONES */
+#alertas{
+  position: fixed; /*la posicion siempre estara en el mismo lugar independiente del movimiento de la pagina*/
+  top: 50px; /*50 pixeles desde arriba*/
+  right: 30px; /*30 pixeles desde la derecha*/
+  width: 500px;
+  height: 50px;
+  z-index: 20000 !important; /*el contenedor siempre sera visible y estara por enciama de cualquier otro contenedor*/
+}
+#alertas > div{
+  transition: 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+.alert a{cursor: pointer;}
+
+/* BOTON PARA AGREGAR UNA NUEVA FILA EN EL MODAL DE DETALLE */
+td.addDetalle{
+  text-align: center; 
+  vertical-align: middle;
+}
+td.addDetalle:hover > .addDet,
+td.addDetalle:hover > .addDet > span{
+  font-size: 15px;
+}
+a.addDet{
+  cursor: pointer;
+  font-size: 15px;
+  text-align: center;
+  transition: 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+  text-decoration: none;
+}
+a.addDet > span{
+  font-size: 15px;
+  transition: 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}

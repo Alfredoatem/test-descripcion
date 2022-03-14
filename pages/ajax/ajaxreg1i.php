@@ -68,7 +68,7 @@ try {
     }
     $sql = "INSERT INTO maealma (dcto, nro, fecha, glosa, codrep, obs1, obs2, ref1, ref2, ref3, ref4, fte, orgfin, dcto_c, nro_c, usr_add, fec_add, usr_upd, fec_upd, voboalma, codtip, gestion) VALUES ('$txtdcto','$txtnro',";
     $sql.= "'$txtfecha','$txtglosa','$hdnrepar','$txtemp','$txtfact','$txtsolpor','$txtpedi','$txtcotpor','$txthtd','$cboffin','','','',";
-    $sql.= "'".$_SESSION["sialmausr"]."','".date('m/d/Y')."','".$_SESSION["sialmausr"]."','".date('m/d/Y')."','','$cbotiper','$txtgest');";
+    $sql.= "'".$_SESSION["sialmausr"]."','".date('m/d/Y')."','".$_SESSION["sialmausr"]."','".date('m/d/Y')."','N','$cbotiper','$txtgest');";
     //echo $sql."<br>";
     $query1 = $db->prepare($sql);
     $query1->execute();

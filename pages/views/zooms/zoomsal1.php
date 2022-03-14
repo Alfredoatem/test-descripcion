@@ -34,50 +34,54 @@ else{
     $pagina = $_GET["pagina"];
 }
 
-
 if (!$pagina) { 
 	$inicio = 0; 
 	$pagina = 1; 
 }else{ 
 	$inicio = ($pagina - 1) * $registros; 
 }
-
+$codgranalm.='C';
 //$sql = "SELECT count(*) as num FROM paramalmacen WHERE 1=1 ".$criterio;
 $sqldet = "SELECT count(*) as num FROM (";
-$sqldet.= "SELECT d.codalm, d.codprod, p.des, u.des, pu, dcto_m, nro_m, codtip, sum(dcant) as suma1, sum(hcant) as suma2, sum(dcant-hcant) as suma3, sum(dcant)*pu-sum(hcant)*pu as suma4";
+// $sqldet.= "SELECT d.codalm, d.codprod, p.des, u.des, pu, dcto_m, nro_m, codtip, sum(dcant) as suma1, sum(hcant) as suma2, sum(dcant-hcant) as suma3, sum(dcant)*pu-sum(hcant)*pu as suma4";
+$sqldet.= "SELECT d.codalm, d.codprod, p.des, u.des, pu, d.dcto, d.nro, codtip, sum(dcant) as suma1, sum(hcant) as suma2, sum(dcant-hcant) as suma3, sum(dcant)*pu-sum(hcant)*pu as suma4"; //CONSULTA d.dcto -> para buscar solo las celdas de ingresos y no salidas.
 $sqldet.= " from maealma m";
 $sqldet.= " inner join detalma d on m.dcto=d.dcto and m.nro=d.nro";
 $sqldet.= " inner join paramdctoalma z on m.dcto=z.cod";
 $sqldet.= " left outer join conpre21:producto p on p.cod = d.codprod";
 $sqldet.= " left outer join conpre21:unimedid u on u.cod = p.codumed";
 $sqldet.= " where m.voboalma<>'A'";
-$sqldet.= " and m.dcto[1]='$codgranalm' and codalm='$codalm'";
+// $sqldet.= " and m.dcto[1]='$codgranalm' and codalm='$codalm'";
+$sqldet.= " and d.dcto='$codgranalm' and codalm='$codalm'";
 $sqldet.= " and d.codprod = '$codprod' and codtip='$cbotiper'";
 $sqldet.= " group by 1,2,3,4,5,6,7,8";
 $sqldet.= " having sum(dcant-hcant)>0";
-$sqldet.= " order by dcto_m,nro_m";
+// $sqldet.= " order by dcto_m,nro_m";
+$sqldet.= " order by d.dcto,d.nro";
 $sqldet.= " )";
 $cont = $db->prepare($sqldet);
 $cont->execute();
 $r = $cont->fetch(PDO::FETCH_ASSOC);
 $total=$r['num'];
-//echo $sqldet;
-
+// print_r($sqldet);
 
 //$sql = "SELECT skip $inicio first $registros * FROM paramalmacen WHERE 1=1 ".$criterio;
 //$sql .= "ORDER BY 1 ";
-$sqldet = "SELECT skip $inicio first $registros d.codalm, d.codprod, p.des, u.des, pu, dcto_m, nro_m, codtip, sum(dcant) as suma1, sum(hcant) as suma2, sum(dcant-hcant) as suma3, sum(dcant)*pu-sum(hcant)*pu as suma4";
+// $sqldet = "SELECT skip $inicio first $registros d.codalm, d.codprod, p.des, u.des, pu, dcto_m, nro_m, codtip, sum(dcant) as suma1, sum(hcant) as suma2, sum(dcant-hcant) as suma3, sum(dcant)*pu-sum(hcant)*pu as suma4";
+$sqldet = "SELECT skip $inicio first $registros d.codalm, d.codprod, p.des, u.des, pu, d.dcto, d.nro, codtip, sum(dcant) as suma1, sum(hcant) as suma2, sum(dcant-hcant) as suma3, sum(dcant)*pu-sum(hcant)*pu as suma4";
 $sqldet.= " from maealma m";
 $sqldet.= " inner join detalma d on m.dcto=d.dcto and m.nro=d.nro";
 $sqldet.= " inner join paramdctoalma z on m.dcto=z.cod";
 $sqldet.= " left outer join conpre21:producto p on p.cod = d.codprod";
 $sqldet.= " left outer join conpre21:unimedid u on u.cod = p.codumed";
 $sqldet.= " where m.voboalma<>'A'";
-$sqldet.= " and m.dcto[1]='$codgranalm' and codalm='$codalm'";
+// $sqldet.= " and m.dcto[1]='$codgranalm' and codalm='$codalm'";
+$sqldet.= " and d.dcto='$codgranalm' and codalm='$codalm'";
 $sqldet.= " and d.codprod = '$codprod' and codtip='$cbotiper'";
 $sqldet.= " group by 1,2,3,4,5,6,7,8";
 $sqldet.= " having sum(dcant-hcant)>0";
-$sqldet.= " order by dcto_m,nro_m";
+// $sqldet.= " order by dcto_m,nro_m";
+$sqldet.= " order by d.dcto,d.nro";
 $query = $db->prepare($sqldet);
 $query->execute();
 $tpaginas = ceil($total/$registros);
@@ -180,8 +184,8 @@ $(function(){
             //echo trim($r1['des']);
             ?>
         <tr>
-          <td height="5" class="codigo1"><?=trim($row['dcto_m'])?></td>
-          <td height="5" class="codigo2"><?=trim($row['nro_m'])?></td>
+          <td height="5" class="codigo1"><?=trim($row['dcto'])?></td>
+          <td height="5" class="codigo2"><?=trim($row['nro'])?></td>
           <td height="5"><?=trim($r3['des'])?></td>
           <td height="5"><?=trim($r1['des'])?></td>
           <td height="5"><?=trim($r2['des'])?></td>

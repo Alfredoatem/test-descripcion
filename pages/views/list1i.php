@@ -43,18 +43,23 @@ else {
 }
 	
 $sql="SELECT count(*) as num FROM maealma WHERE voboalma in ('S','N') ".$aux;
+// $sql = "SELECT count(*) as num FROM maealma WHERE gestion=2021";
 $cont = $db->prepare($sql);
 $cont->execute();
 $r = $cont->fetch(PDO::FETCH_ASSOC);	
 $total=$r['num'];
 
 if ($total==0){
-  echo "<script type='text/javascript'>alert('No Existen Datos.\nIntroduzca otro parametro de Busqueda')";
+  echo "<script type='text/javascript'>alert('No Existen Datos.\nIntroduzca otro parametro de Busqueda');";
   echo "document.location='formsrcprev.php'</script>";
+  ?>
+  <script type="text/javascript">alert('No existen Datos');window.history.back();</script>
+  <?
   exit;
 }
 
 $sql="SELECT skip $inicio first $registros * FROM maealma WHERE voboalma in ('S','N') ".$aux." ";
+// $sql = "SELECT skip $inicio first $registros * FROM maealma WHERE gestion=2021";
 $sql.="ORDER BY 1,2 ";
 $query = $db->prepare($sql);
 $query->execute();
@@ -71,6 +76,9 @@ $tpaginas = ceil($total/$registros);
     <style>
       .pagination{
         margin:0px 0;
+      }
+      button.btn-volver{
+        float: right;
       }
     </style>
   </head>
@@ -89,20 +97,20 @@ $tpaginas = ceil($total/$registros);
         <div class="row">
           <div class="col-lg-12">
               <h2 class="page-header">Ingreso Almacen <?
-                echo $_SESSION['sialmausr'];
+                  //echo $_SESSION['sialmausr'];
                   //$_SESSION["sialmagalm"]
-                  echo  $_SESSION["sialmarol"];
+                  //echo  $_SESSION["sialmarol"];
                   $dcto_c=$row['dcto_c'];
                   $nro_c=$row['nro_c'];
                   $voboalma=$row['voboalma'];
                   if(is_null($dcto_c) && is_null($nro_c)){
-                      echo "valor voboalma: ".$row['voboalma']."<br>";
-                      echo "valor dctoc: ".$row['dcto_c']." es nulo <br>";
-                      echo "valor nro_c: ".$row['nro_c']." es nulo <br>";
+                      //echo "valor voboalma: ".$row['voboalma']."<br>";
+                      //echo "valor dctoc: ".$row['dcto_c']." es nulo <br>";
+                      //echo "valor nro_c: ".$row['nro_c']." es nulo <br>";
                   }else {
-                      echo "valor voboalma: ".$row['voboalma']."<br>";
-                      echo "valor dctoc: ".$row['dcto_c']." no es nulo <br>";
-                      echo "valor nro_c: ".$row['nro_c']." no es nulo <br>";
+                      //echo "valor voboalma: ".$row['voboalma']."<br>";
+                      //echo "valor dctoc: ".$row['dcto_c']." no es nulo <br>";
+                      //echo "valor nro_c: ".$row['nro_c']." no es nulo <br>";
                   }
                   $sqldet2="SELECT * FROM detalma WHERE gestion='".$row['gestion']."' AND dcto='".$row['dcto']."' AND nro='".$row['nro']."' ";
                   $sqldet2.="ORDER BY id";
@@ -117,11 +125,11 @@ $tpaginas = ceil($total/$registros);
                       $nro_m=null;
                   }
                   if(is_null($dcto_m) && is_null($nro_m)){
-                      echo "valor dctom: ".$dcto_m." no existe registro <br>";
-                      echo "valor nro_m: ".$nro_m." no existe registro <br>";
+                      //echo "valor dctom: ".$dcto_m." no existe registro <br>";
+                      //echo "valor nro_m: ".$nro_m." no existe registro <br>";
                   }else {
-                      echo "valor dctom: ".$rowdet2['dcto_m']." existe registro <br>";
-                      echo "valor nro_m: ".$rowdet2['nro_m']." existe registro <br>";
+                      //echo "valor dctom: ".$rowdet2['dcto_m']." existe registro <br>";
+                      //echo "valor nro_m: ".$rowdet2['nro_m']." existe registro <br>";
                   }
 
                   $sqldet3="SELECT count(*) as num FROM  detalma WHERE gestion='2020' AND dcto_m='".$row['dcto']."' AND nro_m='".$row['nro']."' and dcto in(";
@@ -131,7 +139,7 @@ $tpaginas = ceil($total/$registros);
                   $r3 = $qrydet3->fetch(PDO::FETCH_ASSOC);
                   $total=$r3['num'];
                   //echo $sqldet3;
-                  echo $total;
+                  //echo $total;
 //                    select cod from paramdctoalma where cod[1]='D' and aceo[2]='S'
             ?>
             <div class='pull-right'>
@@ -142,7 +150,7 @@ $tpaginas = ceil($total/$registros);
                 <a href="#" class="btn btn-default <?=verpermiso($r3['num'],$row['voboalma'],$row['dcto_c'],$row['nro_c'],$_SESSION['sialmausr'],'Vobo',$g,$d,$n)?>" data-toggle="modal" data-target=".modalvobo"><span class="fa fa-check-circle"></span>&nbsp;Vo.bo.</a>
                 <a href="#" class="btn btn-default <?=verpermiso($r3['num'],$row['voboalma'],$row['dcto_c'],$row['nro_c'],$_SESSION['sialmausr'],'Gloaux',$g,$d,$n)?>" data-toggle="modal" data-target=".modalauxglosa"><span class="fa fa-comment-o"></span>&nbsp;Glosa Aux.</a>
                 <a href="#" class="btn btn-default <?=verpermiso($r3['num'],$row['voboalma'],$row['dcto_c'],$row['nro_c'],$_SESSION['sialmausr'],'Gencontab',$g,$d,$n)?>" data-toggle="modal" data-target=".modalgenconta"><span class="fa fa-exchange"></span>&nbsp;Gen. Contab.</a>
-                  <a href="../pdfsialma.php?g=<?=$row['gestion']?>&n=<?=$row['nro']?>&d=<?=$row['dcto']?>" class="btn btn-default" target="_blank"><span class="fa fa-print"></span>&nbsp;Imprimir</a>
+                  <a href="../reportes/reporte1i.php?documento=<?=base64_encode($row['dcto'].','.$row['nro'].','.$row['gestion'])?>" class="btn btn-default" target="_blank"><span class="fa fa-print"></span>&nbsp;Imprimir</a>
               </div>
             </div>
             </h2>
@@ -178,7 +186,7 @@ $tpaginas = ceil($total/$registros);
                     <!-- /.col-lg-12 (nested) -->
                     <div class="col-lg-12">
                       <div class="form-group">
-                        <label class="col-lg-1 control-label">Fecha</label>
+                        <label class="col-lg-1 control-label">Fecha:</label>
                         <div class="col-lg-3">
                           <div class='input-group date' id='txtfec'>
                             <input type='text' class="form-control" name="txtfecha" value="<?=newdate($row['fecha'])?>" required/>
@@ -603,8 +611,10 @@ $tpaginas = ceil($total/$registros);
               <li class="<?=$disablenext?>"><a href="list1i.php?pagina=<?=$tpaginas.$link;?>">Ultimo <span aria-hidden="true">&rarr;</span></a></li>
             <?
           }
-          ?>
-          </ul>
+          ?>          
+          </ul>          
+          <button type="button" onclick="location.href='formsrc1i.php?transac=C'" class="btn btn-lg btn-primary btn-volver">Volver</button>
+
         </nav>
 
       </div>

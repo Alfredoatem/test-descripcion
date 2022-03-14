@@ -1,0 +1,17 @@
+/*
+input.accountInputDisabled {    
+    border: 1px solid #BABABA !important;   
+    background-color: #E5E5E5 !important;        
+    color: #000000;    
+    -webkit-touch-callout: none;    
+    -webkit-user-select: none;    
+    -khtml-user-select: none;    
+    -moz-user-select: none;    
+    -moz-user-input: disabled;    
+    -ms-user-select: none;    
+    cursor:not-allowed;}
+    
+input:focus {    
+    outline: none;
+}   
+*/

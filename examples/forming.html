@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap Core CSS -->
+<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- MetisMenu CSS -->
+<link href="../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+<!-- Custom CSS -->
+<link href="../resources/scripts/sb-admin-2/css/sb-admin-2.css" rel="stylesheet">
+<!-- Custom Fonts -->
+<link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<!-- Bootstrap Datepicker CSS-->
+<link href="../vendor/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css">
+<link href="../vendor/bootstrap-multiselect/bootstrap-multiselect.css" rel="stylesheet" type="text/css">  
+
+<script src="../vendor/jquery/jquery.min.js"></script> 
+<script language="JavaScript" src="../resources/scripts/form/jquery.number.js" type="text/javascript"></script>
+<script language="JavaScript" src="../resources/scripts/form/jquery.alphanumeric.js" type="text/javascript"></script>
+<script language="JavaScript" src="../resources/scripts/form/inputmask/jquery.inputmask.min.js" type="text/javascript"></script>
+<script language="JavaScript" src="../resources/scripts/popup.js" type='text/javascript'></script>
+
+<script src="../vendor/moment-with-locales.js"></script>
+<!-- Bootstrap Core JavaScript --> 
+<script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="../vendor/bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js"></script>
+<script src="../vendor/bootstrap-multiselect/bootstrap-multiselect.js"></script>
+<!-- Metis Menu Plugin JavaScript --> 
+<script src="../vendor/metisMenu/metisMenu.min.js"></script> 
+<!-- Custom Theme JavaScript --> 
+<script src="../resources/scripts/sb-admin-2/js/sb-admin-2.js"></script>
+  
+<script type="text/javascript">
+
+$(function(){
+  /*Funciones de Maestro*/
+
+  $('#txtfi').datetimepicker({
+    locale: 'es',
+    format: 'L',
+    minDate: moment("01/01/2021"),
+    maxDate: moment(),
+    useCurrent: false,
+    defaultDate: moment("01/01/2021")
+  });
+  
+ 
+});
+</script>
+    <title>Registrar Ingresos</title>
+</head>
+<body>
+
+<div class="wrapper">
+      <!-- Navigation -->
+  <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="views/inicio.php">Transacciones de Ingresos</a>
+    </div>
+    <!-- /.navbar-header -->
+    <? include("../pages/views/inc/menuh.php") ?>
+    <!-- /.navbar-top-links -->
+    <? include("menuv___.php") ?>
+    <!-- /.navbar-static-side --> 
+  </nav>
+    <div class="page-wrapper">
+             <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Transacciones de Ingresos</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Formulario de Ingresos
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <form role="form">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label>DCTO</label>
+                                                <input class="form-control" type="number">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="control-label">Fecha Verificacion:</label>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class='input-group date' id='txtfi'>
+                                                            <input type='text' class="form-control" name="txtfini"/>
+                                                            <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Fecha Deposito :</label>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class='input-group date' id='txtfi'>
+                                                        <input type='text' class="form-control" name="txtfini"/>
+                                                        <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Interesado</label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label>Op. Banco</label>
+                                                <input type="number" class="form-control">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Gestion:</label>
+                                                <input type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Observaciones</label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Cod. Concepto Ingreso</label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Cod. Cta. Bancaria</label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Cod. Repartición</label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Monto en Bs.</label>
+                                            <input type="number" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Dcto.Contable</label>
+                                            <input class="form-control" type="number">
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-3 mb-4">
+                                                <label>Programa</label>
+                                                <input type="number" class="form-control">
+                                            </div>
+                                            <div class="form-group col-md-3 mb-4">
+                                                <label>Actividad</label>
+                                                <input type="number" class="form-control">
+                                            </div>
+                                            <div class="form-group col-md-3 mb-4">
+                                                <label>Cta. Contable</label>
+                                                <input type="number" class="form-control">
+                                            </div>
+                                            <div class="form-group col-md-3 mb-4">
+                                                <label>Rubro :</label>
+                                                <input type="number" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-4">
+                                                <label>Estado :</label>
+                                                <input type="number" class="form-control">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label class="control-label">Fecha A.:</label>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class='input-group date' id='txtfi'>
+                                                            <input type='text' class="form-control" name="txtfini"/>
+                                                            <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Fuente Fin.</label>
+                                                <textarea class="form-control" rows="1"></textarea>
+                                            </div>
+                                        </div>                                        
+                                        
+                                        <div class="form-group">
+                                            <label>ObsEst.</label>
+                                            <textarea class="form-control" rows="1"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Preventivo</label>
+                                            <textarea class="form-control" rows="1"></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-danger">Cancelar</button>
+                                        <button type="reset" class="btn btn-success">Aceptar</button>
+                                    </form>
+                                </div>
+                                
+                                <!-- /.col-lg-6 (nested) -->
+                            </div>
+                            <!-- /.row (nested) -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+    </div>
+</div>
+</body>
+</html>

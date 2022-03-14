@@ -19,7 +19,7 @@ $txtemp=$_POST['txtemp'];
 $txtfact=$_POST['txtfact'];
 $cboffin=$_POST['cboffin'];
 $txtsolpor=$_POST['txtsolpor'];
-$txtpedi=$_POST['txtpedi'];
+$txtcite=$_POST['txtcite'];
 $txtcotpor=$_POST['txtcotpor'];
 $cbotiper=$_POST['cbotiper'];
 
@@ -46,7 +46,9 @@ $cbotiper=$_POST['cbotiper'];
 //hdnselffin
 
 try {
-    $sql = "UPDATE maealma SET fecha='$txtfecha',ref4='$txthtd',glosa='$txtglosa',codrep='$hdnrepar',obs1='$txtemp',obs2='$txtfact',fte='$cboffin',ref1='$txtsolpor',ref2='$txtpedi',ref3='$txtcotpor',codtip='$cbotiper', usr_upd='".$_SESSION["sialmausr"]."', fec_upd='".date('d/m/Y')."' ";
+    $date = str_replace('/', '-', $txtfecha);
+    $txtfecha = date('m/d/Y', strtotime($date));
+    $sql = "UPDATE maealma SET fecha='$txtfecha',ref4='$txthtd',glosa='$txtglosa',codrep='$hdnrepar',obs1='$txtemp',obs2='$txtfact',fte='$cboffin',ref1='$txtsolpor',ref2='$txtcite',ref3='$txtcotpor',codtip='$cbotiper', usr_upd='".$_SESSION["sialmausr"]."', fec_upd='".date('m/d/Y')."' ";
     $sql.= "WHERE gestion='$txtgest' AND nro='$txtnro' AND dcto='$txtdcto'";
     $query = $db->prepare($sql);
     $query->execute();
@@ -54,10 +56,9 @@ try {
         echo "Ok";
     }else{
         echo "algo salio mal";
-//        var_dump($query->errorinfo(), TRUE);
     }
 
 } catch (Exception $e) {
-  echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+  echo 'Excepción capturada: ',  $e->getMessage(), "\n";  
 }
 ?>

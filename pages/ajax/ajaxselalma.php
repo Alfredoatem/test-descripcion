@@ -1,4 +1,4 @@
 <?
-include "../seguridad.php";
+//include "../seguridad.php";
 $_SESSION["authsialma"] = "pendiente";
 ?>

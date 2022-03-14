@@ -1,5 +1,5 @@
 <?php
-$gestion = 2020;
+$gestion = 2021;
 
 /*CAMBIA FORMATO DE FECHA*/
 function newdate($fecha){
@@ -203,7 +203,7 @@ function verpermiso($total,$vb,$d,$nc,$u,$m,$g=0,$n=0,$i=0,$t='N'){
     $r = $db->query($qry)->fetch(PDO::FETCH_ASSOC);
     //echo $qry;
     //echo $r['num']." ";
-    //echo "ada".$total;
+    // echo "ada".$total;
   if($_SESSION["sialmarol"]<>'admin'){
     if($r['num']>=1){
       if($m=="Vobo"){
@@ -213,7 +213,7 @@ function verpermiso($total,$vb,$d,$nc,$u,$m,$g=0,$n=0,$i=0,$t='N'){
           if($vb=="S"){
               $val = "disabled";
           }
-          elseif( $d){
+          elseif($d){
               $val = "disabled";
           }elseif( $nc){
               $val = "disabled";
@@ -248,14 +248,14 @@ function verpermiso($total,$vb,$d,$nc,$u,$m,$g=0,$n=0,$i=0,$t='N'){
       //desde aca tn ontiveros
 //      $val = $d;
       if($m=="Detalle" || $m=="Eliminar") {
-          if ($vb == "S") {
+          if ( $vb == "S" || isset($d) || isset($nc) || $total >= 1 ) {
               $val = "disabled";
-          } elseif ($d) {
-              $val = "disabled";
-          } elseif ($nc) {
-              $val = "disabled";
-          } elseif( $total>=1){
-              $val = "disabled";
+        //   } elseif (isset($d)) {
+        //       $val = "disabled";
+        //   } elseif (isset($nc)) {
+        //       $val = "disabled";
+        //   } elseif( $total>=1){
+        //       $val = "disabled";
           }else {
               $val = "";
           }
@@ -263,9 +263,9 @@ function verpermiso($total,$vb,$d,$nc,$u,$m,$g=0,$n=0,$i=0,$t='N'){
           if($vb=="S"){
               $val = "disabled";
           }
-          elseif( $d){
+          elseif(isset($d)){
               $val = "disabled";
-          }elseif( $nc){
+          }elseif(isset($nc)){
               $val = "disabled";
           }else{
               $val = "";
@@ -321,6 +321,13 @@ function bdctoalma($c){
 function brepar($r){
 	global $db;
 	$sql="SELECT * FROM paramrepar WHERE cod='$r'";
+	$r = $db->query($sql)->fetch(PDO::FETCH_ASSOC);	
+	return trim($r['des']);	
+}
+
+function breubic($r){
+	global $db;
+	$sql="SELECT * FROM paramubic WHERE cod='$r'";
 	$r = $db->query($sql)->fetch(PDO::FETCH_ASSOC);	
 	return trim($r['des']);	
 }
