@@ -281,7 +281,7 @@ $(function(){
           //$cont2=$cont2+1;
         }
       
-        //hola
+        //hola como estas
         /*$dir4=array();
         while($row2 = $query2->fetch(PDO::FETCH_ASSOC)){
           $dir4[$cont]=$row2['febrero'];
